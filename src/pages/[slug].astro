@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/Layout.astro";
+import guests from "../data/guests.json";
+import timeline from "../data/timeline.json";
+import map from "../assets/map.jpg";
+
+interface Timeline {
+  date: string;
+  time: {
+    akad: string;
+    resepsi: string;
+  };
+}
+
+export function getStaticPaths() {
+  return guests.map((item) => ({
+    params: {
+      ...item,
+    },
+  }));
+}
+
+const { slug } = Astro.params;
+const timelineData = timeline as Timeline;
+
+const find = guests.find((item) => item.slug === slug);
+---
+
+<Layout title={`Undangan Untuk ${find?.name}`}>
+  <main
+    class="relative bg-gradient-to-b from-[#8DC8E7] to-[#548CB3] flex flex-col items-center min-h-screen py-32"
+  >
+    <div
+      class="absolute bottom-0 h-[90rem] bg-gradient-to-b from-[#548CB3]/5 from-10% to-[#548CB3] to-50% w-full"
+    >
+    </div>
+    <button></button>
+    <section
+      class="z-20 container max-w-lg gap-36 flex flex-col px-10 pt-60 pb-20 md:max-w-3xl border-[12px]"
+    >
+      <div class="text-center text-white space-y-6 w-full">
+        <h1 class="text-5xl font-bold">Reksa & Resti</h1>
+        <p class="font-normal text-base">Undangan Ini Untuk {find?.name}</p>
+      </div>
+
+      <div class="text-center space-y-4 text-white">
+        <h3 class="text-2xl font-normal">Dilaksanakan</h3>
+        <h2 class="text-3xl font-medium">{timelineData.date}</h2>
+
+        <div>
+          <p class="text-base font-normal">{timelineData.time.akad}</p>
+          <p class="text-base font-normal">{timelineData.time.resepsi}</p>
+        </div>
+
+        <button
+          class="rounded-full transition-all ease-in-out duration-300 hover:scale-125 text-black font-medium text-lg border-2 border-[#CBCBCB]/20 px-6 py-2.5 shadow-xl bg-gradient-to-b from-white to-[#EAEAEA]"
+        >
+          Simpan di Kalender
+        </button>
+      </div>
+
+      <div class="text-center space-y-6 text-white">
+        <h4 class="text-xl font-medium">Bismillahirrahmaanirrahiim</h4>
+        <p class="text-base font-normal">
+          Maha Suci Allah Subhanahu Wa Ta’ala yang telah menciptakan makhluk-Nya
+          berpasang-pasangan. Dengan memohon Rahmat dan Ridho Allah Subahanahu
+          Wa Ta’ala, Kami bermaksud mengundang Bapak/Ibu/Saudara/i dalam acara
+          Pernikahan Kami.
+        </p>
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:gap-4 gap-y-10 auto-rows-fr md:grid-cols-2"
+      >
+        <div class="text-center text-white space-y-2">
+          <h3 class="text-2xl font-semibold">Reksa Sarmedi Ma’mur</h3>
+          <p class="text-base font-normal">
+            <span>Putra dari Alm Bpk. Sarmedi Ma’mur</span>
+            <br />
+            <span>& Ibu Santi Sri Mulyati</span>
+          </p>
+        </div>
+        <div class="text-center text-white space-y-2">
+          <h3 class="text-2xl font-semibold">Resti Meidiyani Dimyati</h3>
+          <p class="text-base font-normal">
+            <span>Putri dari Alm Bpk. Didin Dimyati</span>
+            <br />
+            <span>& Ibu Lilis Setiawati</span>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <a href="https://maps.app.goo.gl/s4NFsbRVH1bXY3Lv7" target="_blank">
+          <div
+            style={{ backgroundImage: `url(${map.src})` }}
+            class="bg-blend-multiply relative w-full flex justify-center items-center cursor-pointer isolate hover:scale-105 transition-all duration-300 bg-[length:300%_250%] md:bg-[length:300%_400%] bg-[position:45%_45%] md:bg-[position:40%_59%] border-4 border-[#EAEAEA] rounded-3xl bg-clip-border shadow-xl h-64 bg-no-repeat"
+          >
+            <div
+              class="rounded-3xl transition-all gap-10 duration-300 backdrop-blur-sm hover:backdrop-blur-none bg-gradient-to-r from-white from-20% to-white/20 to-50% flex flex-col h-full w-full px-6 py-12 md:px-8 md:py-10 justify-between group"
+            >
+              <div class="flex-1 space-y-2">
+                <span
+                  class="text-xl group-hover:underline group-hover:text-[#103CC4]"
+                >
+                  Lokasi
+                </span>
+                <h4
+                  class="text-4xl font-bold group-hover:underline group-hover:text-[#103CC4]"
+                >
+                  Taman Kopi Serang
+                </h4>
+              </div>
+
+              <span class="group-hover:underline group-hover:text-[#103CC4]">
+                Lihat map
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="text-center text-white space-y-6">
+        <h6 class="text-xl">Qs. Ar-Rum: 21</h6>
+        <p class="text-base">
+          وَمِنْ ءَايَٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًا
+          لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ
+          إِنَّ فِى ذَٰلِكَ لَءَايَٰتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+        </p>
+        <p class="text-base">
+          "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu
+          isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa
+          tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan
+          sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat
+          tanda-tanda bagi kaum yang berfikir."
+        </p>
+      </div>
+
+      <div class="text-center text-white space-y-4">
+        <h1 class="text-xl font-semibold">Terimakasih</h1>
+        <p class="text-base font-light isolate">
+          Demikian Kami sampaikan Undangan ini, mohon maaf apabila terdapat
+          kesalahan kata. Terimakasih atas segala doa dan harapannya.
+        </p>
+      </div>
+
+      <p class="text-white text-center w-full">
+        Created by <span class="underline font-semibold">reksa</span>.
+      </p>
+    </section>
+  </main>
+</Layout>
